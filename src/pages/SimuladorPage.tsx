@@ -104,14 +104,14 @@ export default function SimuladorPage() {
           <div className="p-6 pb-4">
             <h2 className="text-lg font-bold">Resultado da distribuição — {periodo}</h2>
             <p className="text-sm text-muted-foreground mt-1">
-              Valor total: {formatCurrency(numericVal)} · Base: cotas de 01/03/2026 · {activePartners.length} parceiros
+              Valor total: {formatCurrency(numericVal)} · Base: cotas de 01/03/2026 · {activePartners.length} sócios
             </p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-surface text-left">
-                  <th className="px-6 py-3 font-medium text-muted-foreground">Parceiro</th>
+                  <th className="px-6 py-3 font-medium text-muted-foreground">Sócio</th>
                   <th className="px-6 py-3 font-medium text-muted-foreground">Cota</th>
                   <th className="px-6 py-3 font-medium text-muted-foreground">Cálculo</th>
                   <th className="px-6 py-3 font-medium text-muted-foreground">Valor a receber</th>

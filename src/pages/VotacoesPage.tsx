@@ -7,7 +7,7 @@ export default function VotacoesPage() {
   const { proposals, castVote, addProposal } = useAppContext();
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    type: "Entrada de novo parceiro",
+    type: "Entrada de novo sócio",
     title: "",
     description: "",
     quorum: "67",
@@ -28,7 +28,7 @@ export default function VotacoesPage() {
       date: new Date().toLocaleDateString("pt-BR"),
     });
     setModalOpen(false);
-    setFormData({ type: "Entrada de novo parceiro", title: "", description: "", quorum: "67", deadline: "72h" });
+    setFormData({ type: "Entrada de novo sócio", title: "", description: "", quorum: "67", deadline: "72h" });
     toast.success("Proposta criada com sucesso");
   };
 
@@ -190,7 +190,7 @@ export default function VotacoesPage() {
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                   className="mt-1 w-full h-10 px-3 rounded-lg border border-border bg-background text-sm"
                 >
-                  {["Entrada de novo parceiro", "Transferência de cota", "Saída de parceiro", "Alteração de regras", "Outro"].map((t) => (
+                  {["Entrada de novo sócio", "Transferência de cota", "Saída de sócio", "Alteração de regras", "Outro"].map((t) => (
                     <option key={t}>{t}</option>
                   ))}
                 </select>
@@ -202,7 +202,7 @@ export default function VotacoesPage() {
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   className="mt-1 w-full h-10 px-3 rounded-lg border border-border bg-background text-sm"
-                  placeholder="Ex: Entrada de novo parceiro"
+                  placeholder="Ex: Entrada de novo sócio"
                 />
               </div>
 

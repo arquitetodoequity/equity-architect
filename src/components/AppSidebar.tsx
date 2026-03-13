@@ -1,11 +1,11 @@
-import { PieChart, LayoutDashboard, Vote, Calculator, Settings, Menu, X } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { PieChart, LayoutDashboard, Users, Vote, Calculator, Settings, Menu, X, LogOut } from "lucide-react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAppContext } from "@/contexts/AppContext";
 import { useState } from "react";
 
 const navItems = [
   { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-  { label: "Parceiros", path: "/dashboard", icon: PieChart },
+  { label: "Sócios", path: "/socios", icon: Users },
   { label: "Votações", path: "/votacoes", icon: Vote },
   { label: "Simulador", path: "/simulador", icon: Calculator },
   { label: "Configurações", path: "/configuracoes", icon: Settings },
@@ -14,7 +14,13 @@ const navItems = [
 export default function AppSidebar() {
   const { currentUser } = useAppContext();
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleLogout = () => {
+    setMobileOpen(false);
+    navigate("/");
+  };
 
   const sidebarContent = (
     <div className="flex flex-col h-full w-60 bg-sidebar-bg text-sidebar-fg">
@@ -52,11 +58,18 @@ export default function AppSidebar() {
           <div className="h-9 w-9 rounded-full bg-sidebar-active flex items-center justify-center text-sm font-medium">
             {currentUser.initials}
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <p className="text-sm font-medium truncate">{currentUser.name}</p>
             <p className="text-xs text-sidebar-fg/50 truncate">{currentUser.company}</p>
           </div>
         </div>
+        <button
+          onClick={handleLogout}
+          className="mt-3 flex items-center gap-2 text-sm text-sidebar-fg/40 hover:text-sidebar-fg transition-fast w-full px-1"
+        >
+          <LogOut className="h-4 w-4" />
+          <span>Sair</span>
+        </button>
       </div>
     </div>
   );

@@ -42,8 +42,8 @@ export default function OnboardingPage() {
   ];
 
   const quorumTable = [
-    { type: "Entrada de parceiro", quorum: "67%" },
-    { type: "Saída de parceiro", quorum: "67%" },
+    { type: "Entrada de sócio", quorum: "67%" },
+    { type: "Saída de sócio", quorum: "67%" },
     { type: "Mudança de regras", quorum: "75%" },
     { type: "Encerramento", quorum: "100%" },
   ];
@@ -106,7 +106,7 @@ export default function OnboardingPage() {
             <div className="space-y-6 text-center">
               <div>
                 <h1 className="text-2xl font-bold">Quem são os sócios?</h1>
-                <p className="text-sm text-muted-foreground mt-2">Adicione os parceiros e suas participações.</p>
+                <p className="text-sm text-muted-foreground mt-2">Adicione os sócios e suas participações.</p>
               </div>
               <div className="space-y-3 text-left">
                 {partners.map((p, i) => (
@@ -203,7 +203,7 @@ export default function OnboardingPage() {
                   <span className="font-medium">{companyName || "Apex Marketing Agency"}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Parceiros</span>
+                  <span className="text-muted-foreground">Sócios</span>
                   <span className="font-medium">{partners.length} cadastrados ({partners.map((p) => `${p.name} ${p.percentage}%`).join(", ")})</span>
                 </div>
                 <div className="flex justify-between text-sm">
@@ -217,7 +217,7 @@ export default function OnboardingPage() {
               </div>
               <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
                 <p className="text-sm text-muted-foreground">
-                  Um acordo digital será enviado para todos os parceiros assinarem.
+                  Um acordo digital será enviado para todos os sócios assinarem.
                 </p>
               </div>
             </div>

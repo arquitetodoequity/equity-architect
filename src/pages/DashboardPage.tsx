@@ -67,7 +67,7 @@ export default function DashboardPage() {
           {/* Partners table */}
           <div className="rounded-lg border border-border bg-background shadow-sm">
             <div className="p-6 pb-4 flex items-center gap-3">
-              <h2 className="text-lg font-bold">Parceiros ativos</h2>
+              <h2 className="text-lg font-bold">Sócios ativos</h2>
               <span className="h-5 px-2 rounded-full bg-success/10 text-success text-xs font-medium flex items-center">
                 {partners.filter((p) => p.status === "active").length}
               </span>
@@ -76,7 +76,7 @@ export default function DashboardPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-surface text-left">
-                    <th className="px-6 py-3 font-medium text-muted-foreground">Parceiro</th>
+                    <th className="px-6 py-3 font-medium text-muted-foreground">Sócio</th>
                     <th className="px-6 py-3 font-medium text-muted-foreground">Cargo</th>
                     <th className="px-6 py-3 font-medium text-muted-foreground">Participação</th>
                     <th className="px-6 py-3 font-medium text-muted-foreground">Tokens</th>
@@ -172,8 +172,8 @@ export default function DashboardPage() {
 
           {/* Metric cards */}
           {[
-            { label: "Parceiros ativos", value: "3", sub: "Sócios com cota alocada" },
-            { label: "Pool disponível", value: "10%", sub: "Reserva para novos parceiros" },
+            { label: "Sócios ativos", value: "3", sub: "Sócios com cota alocada" },
+            { label: "Pool disponível", value: "10%", sub: "Reserva para novos sócios" },
             { label: "Última decisão", value: "28 fev 2026", sub: "Entrada de Marina Torres" },
           ].map((m) => (
             <div key={m.label} className="rounded-lg border border-border bg-background shadow-sm p-6 transition-fast hover:shadow-md">

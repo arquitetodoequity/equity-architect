@@ -136,12 +136,20 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <button
-            onClick={() => navigate("/onboarding")}
-            className="w-full h-10 rounded-lg border border-gold text-gold-dark text-sm font-medium transition-fast hover:bg-gold-hover"
-          >
-            Ver como novo usuário
-          </button>
+          <div className="space-y-3">
+            <button
+              onClick={() => navigate("/setup")}
+              className="w-full h-10 rounded-lg border border-gold text-gold-dark text-sm font-medium transition-fast hover:bg-gold-hover"
+            >
+              Configurar nova empresa
+            </button>
+            <button
+              onClick={() => navigate("/onboarding")}
+              className="w-full h-10 rounded-lg border border-border text-muted-foreground text-sm font-medium transition-fast hover:bg-surface"
+            >
+              Ver como novo usuário
+            </button>
+          </div>
         </div>
       </div>
     </div>
