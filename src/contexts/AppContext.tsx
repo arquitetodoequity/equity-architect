@@ -37,6 +37,35 @@ export interface HistoryEvent {
   color: "blue" | "green";
 }
 
+export interface CompanySetup {
+  companyName: string;
+  totalSupply: number;
+  partners: { name: string; role: string; percentage: number; type: string }[];
+  poolReserve: number;
+  tokenTypes: string[];
+  hasVesting: boolean;
+  cliffMonths: number;
+  vestingMonths: number;
+  vestingType: string;
+  transferRules: {
+    between: string;
+    external: string;
+    exit: string;
+    nonCompete: boolean;
+    nonCompeteMonths: number;
+  };
+  quorums: {
+    operational: number;
+    entry: number;
+    exit: number;
+    transfer: number;
+    rulesChange: number;
+    dissolution: number;
+  };
+  newPartnerMode: string;
+  votingDeadline: string;
+}
+
 interface AppState {
   companyName: string;
   partners: Partner[];
@@ -50,6 +79,7 @@ interface AppState {
 interface AppContextType extends AppState {
   castVote: (proposalId: string, partnerName: string, vote: "approved" | "rejected") => void;
   addProposal: (proposal: Omit<Proposal, "id" | "votes" | "status" | "approvalPercentage">) => void;
+  updateCompanySetup: (setup: CompanySetup) => void;
 }
 
 const defaultState: AppState = {
@@ -124,6 +154,10 @@ const defaultState: AppState = {
   ],
 };
 
+function getInitials(name: string): string {
+  return name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
+}
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -158,8 +192,51 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setState((prev) => ({ ...prev, proposals: [newProposal, ...prev.proposals] }));
   };
 
+  const updateCompanySetup = (setup: CompanySetup) => {
+    const supply = setup.totalSupply;
+    const newPartners: Partner[] = setup.partners.map((p, i) => ({
+      id: String(i + 1),
+      name: p.name,
+      role: p.role,
+      percentage: p.percentage,
+      tokens: Math.round((p.percentage / 100) * supply),
+      status: "active" as const,
+      initials: getInitials(p.name),
+    }));
+
+    if (setup.poolReserve > 0) {
+      newPartners.push({
+        id: String(newPartners.length + 1),
+        name: "Pool de Reserva",
+        role: "—",
+        percentage: setup.poolReserve,
+        tokens: Math.round((setup.poolReserve / 100) * supply),
+        status: "reserve",
+        initials: "PR",
+      });
+    }
+
+    const firstPartner = setup.partners[0];
+    setState((prev) => ({
+      ...prev,
+      companyName: setup.companyName,
+      totalSupply: supply,
+      partners: newPartners,
+      currentUser: {
+        name: firstPartner?.name || prev.currentUser.name,
+        company: setup.companyName,
+        initials: firstPartner ? getInitials(firstPartner.name) : prev.currentUser.initials,
+      },
+      systemCreatedDate: new Date().toLocaleDateString("pt-BR", { day: "numeric", month: "long", year: "numeric" }),
+      proposals: [],
+      history: [
+        { id: "1", date: new Date().toLocaleDateString("pt-BR", { month: "short", year: "numeric" }), description: "Sistema criado. Cotas iniciais distribuídas.", color: "blue" },
+      ],
+    }));
+  };
+
   return (
-    <AppContext.Provider value={{ ...state, castVote, addProposal }}>
+    <AppContext.Provider value={{ ...state, castVote, addProposal, updateCompanySetup }}>
       {children}
     </AppContext.Provider>
   );

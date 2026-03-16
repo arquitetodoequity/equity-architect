@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Building2, Users, Layers, Clock, ArrowLeftRight, Shield, CheckCircle2, Plus, X, Info, HelpCircle } from "lucide-react";
 import { PieChart } from "lucide-react";
 import { toast } from "sonner";
+import { useAppContext } from "@/contexts/AppContext";
 
 interface SetupPartner {
   name: string;
@@ -19,6 +20,7 @@ type VestingType = "time" | "milestone";
 
 export default function SetupPage() {
   const navigate = useNavigate();
+  const { updateCompanySetup } = useAppContext();
   const [step, setStep] = useState(1);
   const totalSteps = 6;
 
@@ -86,6 +88,27 @@ export default function SetupPage() {
   };
 
   const handleFinish = () => {
+    updateCompanySetup({
+      companyName,
+      totalSupply: parseInt(totalSupply) || 1000000,
+      partners,
+      poolReserve,
+      tokenTypes,
+      hasVesting,
+      cliffMonths,
+      vestingMonths,
+      vestingType,
+      transferRules: {
+        between: transferBetween,
+        external: transferExternal,
+        exit: exitRule,
+        nonCompete,
+        nonCompeteMonths,
+      },
+      quorums,
+      newPartnerMode,
+      votingDeadline,
+    });
     toast.success("Partnership instalado com sucesso!");
     navigate("/dashboard");
   };
