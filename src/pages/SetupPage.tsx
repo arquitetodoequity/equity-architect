@@ -118,14 +118,22 @@ export default function SetupPage() {
       await supabase.from("profiles").update({ company_id: companyId }).eq("id", authUser.id);
 
       // 3. Insert partners
-      const partnerRows = partners.map((p) => ({
+      const partnerRows: {
+        company_id: string;
+        name: string;
+        role: string;
+        percentage: number;
+        token_amount: number;
+        partner_type: "founder" | "key_person" | "pool";
+        status: "active" | "inactive" | "reserve";
+      }[] = partners.map((p) => ({
         company_id: companyId,
         name: p.name,
         role: p.role,
         percentage: p.percentage,
         token_amount: Math.round((p.percentage / 100) * (parseInt(totalSupply) || 1000000)),
-        partner_type: p.type === "Fundador" ? "founder" as const : "key_person" as const,
-        status: "active" as const,
+        partner_type: (p.type === "Fundador" ? "founder" : "key_person") as "founder" | "key_person" | "pool",
+        status: "active" as "active" | "inactive" | "reserve",
       }));
 
       // Add pool reserve as partner
