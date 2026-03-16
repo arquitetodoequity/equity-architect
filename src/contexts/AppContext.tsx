@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface Partner {
   id: string;
@@ -68,100 +70,198 @@ export interface CompanySetup {
 
 interface AppState {
   companyName: string;
+  companyId: string | null;
   partners: Partner[];
   proposals: Proposal[];
   history: HistoryEvent[];
   totalSupply: number;
   systemCreatedDate: string;
   currentUser: { name: string; company: string; initials: string };
+  loading: boolean;
 }
 
 interface AppContextType extends AppState {
   castVote: (proposalId: string, partnerName: string, vote: "approved" | "rejected") => void;
   addProposal: (proposal: Omit<Proposal, "id" | "votes" | "status" | "approvalPercentage">) => void;
   updateCompanySetup: (setup: CompanySetup) => void;
+  refreshData: () => Promise<void>;
 }
-
-const defaultState: AppState = {
-  companyName: "Apex Marketing Agency",
-  totalSupply: 1000000,
-  systemCreatedDate: "15 de março de 2025",
-  currentUser: { name: "Ricardo Alves", company: "Apex Marketing Agency", initials: "RA" },
-  partners: [
-    { id: "1", name: "Ricardo Alves", role: "CEO", percentage: 40, tokens: 400000, status: "active", initials: "RA" },
-    { id: "2", name: "Ana Lima", role: "COO", percentage: 30, tokens: 300000, status: "active", initials: "AL" },
-    { id: "3", name: "Bruno Costa", role: "Head de Vendas", percentage: 20, tokens: 200000, status: "active", initials: "BC" },
-    { id: "4", name: "Pool de Reserva", role: "—", percentage: 10, tokens: 100000, status: "reserve", initials: "PR" },
-  ],
-  proposals: [
-    {
-      id: "4",
-      number: "#004",
-      title: "Transferência de 5% do pool de reserva para Marina Torres",
-      description: "Marina Torres concluiu 6 meses como Head de Produto e atingiu as metas de onboarding. Proposta de transferência de 50.000 tokens do pool para seu endereço.",
-      status: "active",
-      quorum: 67,
-      approvalPercentage: 60,
-      daysRemaining: 3,
-      date: "09/03/2026",
-      votes: [
-        { partner: "Ricardo Alves", status: "approved", tokens: 400000 },
-        { partner: "Ana Lima", status: "pending", tokens: 300000 },
-        { partner: "Bruno Costa", status: "pending", tokens: 200000 },
-      ],
-    },
-    {
-      id: "3",
-      number: "#003",
-      title: "Entrada de Marina Torres",
-      description: "Aprovação da entrada de Marina Torres como parceira.",
-      status: "approved",
-      quorum: 67,
-      approvalPercentage: 90,
-      date: "28/02/2026",
-      participation: "90%",
-      votes: [],
-    },
-    {
-      id: "2",
-      number: "#002",
-      title: "Ajuste de cota: +5% Bruno Costa",
-      description: "Transferência de 5% do pool para Bruno Costa.",
-      status: "approved",
-      quorum: 67,
-      approvalPercentage: 100,
-      date: "12/06/2025",
-      participation: "100%",
-      votes: [],
-    },
-    {
-      id: "1",
-      number: "#001",
-      title: "Configuração inicial do sistema",
-      description: "Criação do sistema e distribuição inicial de cotas.",
-      status: "approved",
-      quorum: 67,
-      approvalPercentage: 100,
-      date: "15/03/2025",
-      participation: "100%",
-      votes: [],
-    },
-  ],
-  history: [
-    { id: "1", date: "Mar 2025", description: "Sistema criado. Cotas iniciais distribuídas.", color: "blue" },
-    { id: "2", date: "Jun 2025", description: "Bruno Costa recebeu adicional de 5% (transferência do pool).", color: "green" },
-    { id: "3", date: "Fev 2026", description: "Entrada de Marina Torres aprovada (proposta #003, 90% dos votos).", color: "green" },
-  ],
-};
 
 function getInitials(name: string): string {
   return name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
 }
 
+const emptyState: AppState = {
+  companyName: "",
+  companyId: null,
+  partners: [],
+  proposals: [],
+  history: [],
+  totalSupply: 1000000,
+  systemCreatedDate: "",
+  currentUser: { name: "", company: "", initials: "" },
+  loading: true,
+};
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<AppState>(defaultState);
+  const { user } = useAuth();
+  const [state, setState] = useState<AppState>(emptyState);
+
+  const loadFromDatabase = async () => {
+    if (!user) {
+      setState({ ...emptyState, loading: false });
+      return;
+    }
+
+    try {
+      // Get user profile with company_id
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      if (!profile?.company_id) {
+        setState({
+          ...emptyState,
+          loading: false,
+          currentUser: {
+            name: user.user_metadata?.full_name || user.email || "",
+            company: "",
+            initials: getInitials(user.user_metadata?.full_name || user.email || "U"),
+          },
+        });
+        return;
+      }
+
+      const companyId = profile.company_id;
+
+      // Fetch company, partners, proposals, votes in parallel
+      const [companyRes, partnersRes, proposalsRes] = await Promise.all([
+        supabase.from("companies").select("*").eq("id", companyId).single(),
+        supabase.from("partners").select("*").eq("company_id", companyId).order("created_at"),
+        supabase.from("proposals").select("*").eq("company_id", companyId).order("created_at", { ascending: false }),
+      ]);
+
+      const company = companyRes.data;
+      const dbPartners = partnersRes.data || [];
+      const dbProposals = proposalsRes.data || [];
+
+      // Fetch votes for all proposals
+      const proposalIds = dbProposals.map((p) => p.id);
+      let dbVotes: any[] = [];
+      if (proposalIds.length > 0) {
+        const { data } = await supabase.from("votes").select("*").in("proposal_id", proposalIds);
+        dbVotes = data || [];
+      }
+
+      // Map partners
+      const mappedPartners: Partner[] = dbPartners.map((p) => ({
+        id: p.id,
+        name: p.name,
+        role: p.role || "—",
+        percentage: Number(p.percentage),
+        tokens: p.token_amount,
+        status: p.status === "active" ? "active" as const : "reserve" as const,
+        initials: getInitials(p.name),
+      }));
+
+      // Map proposals with votes
+      const mappedProposals: Proposal[] = dbProposals.map((p, i) => {
+        const pVotes = dbVotes.filter((v) => v.proposal_id === p.id);
+        const partnerMap = new Map(dbPartners.map((pt) => [pt.id, pt]));
+
+        const votes: Vote[] = pVotes.map((v) => ({
+          partner: partnerMap.get(v.partner_id)?.name || "Desconhecido",
+          status: v.vote === "approve" ? "approved" as const : "rejected" as const,
+          tokens: v.token_weight,
+        }));
+
+        // For open proposals, add pending votes for partners who haven't voted
+        if (p.status === "open") {
+          const votedPartnerIds = new Set(pVotes.map((v) => v.partner_id));
+          dbPartners
+            .filter((pt) => pt.status === "active" && !votedPartnerIds.has(pt.id))
+            .forEach((pt) => {
+              votes.push({
+                partner: pt.name,
+                status: "pending",
+                tokens: pt.token_amount,
+              });
+            });
+        }
+
+        const totalVotingTokens = votes.reduce((s, v) => s + v.tokens, 0);
+        const approvedTokens = votes.filter((v) => v.status === "approved").reduce((s, v) => s + v.tokens, 0);
+        const approvalPercentage = totalVotingTokens > 0 ? Math.round((approvedTokens / totalVotingTokens) * 100) : 0;
+
+        const closesAt = p.closes_at ? new Date(p.closes_at) : null;
+        const now = new Date();
+        const daysRemaining = closesAt ? Math.max(0, Math.ceil((closesAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))) : undefined;
+
+        return {
+          id: p.id,
+          number: `#${String(dbProposals.length - i).padStart(3, "0")}`,
+          title: p.title,
+          description: p.description || "",
+          status: p.status === "open" ? "active" as const : p.status as "approved" | "rejected",
+          quorum: p.quorum_required,
+          approvalPercentage,
+          daysRemaining,
+          votes,
+          date: new Date(p.created_at).toLocaleDateString("pt-BR"),
+          participation: p.status !== "open" ? `${approvalPercentage}%` : undefined,
+        };
+      });
+
+      // Build history from proposals
+      const history: HistoryEvent[] = [
+        {
+          id: "setup",
+          date: new Date(company?.created_at || "").toLocaleDateString("pt-BR", { month: "short", year: "numeric" }),
+          description: "Sistema criado. Cotas iniciais distribuídas.",
+          color: "blue",
+        },
+        ...dbProposals
+          .filter((p) => p.status !== "open")
+          .map((p) => ({
+            id: p.id,
+            date: new Date(p.created_at).toLocaleDateString("pt-BR", { month: "short", year: "numeric" }),
+            description: `${p.title} (${p.status === "approved" ? "aprovada" : "rejeitada"})`,
+            color: "green" as const,
+          })),
+      ];
+
+      setState({
+        companyName: company?.name || "",
+        companyId,
+        partners: mappedPartners,
+        proposals: mappedProposals,
+        history,
+        totalSupply: company?.total_supply || 1000000,
+        systemCreatedDate: new Date(company?.created_at || "").toLocaleDateString("pt-BR", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+        currentUser: {
+          name: profile.full_name || user.email || "",
+          company: company?.name || "",
+          initials: getInitials(profile.full_name || user.email || "U"),
+        },
+        loading: false,
+      });
+    } catch (err) {
+      console.error("Error loading data:", err);
+      setState((prev) => ({ ...prev, loading: false }));
+    }
+  };
+
+  useEffect(() => {
+    loadFromDatabase();
+  }, [user]);
 
   const castVote = (proposalId: string, partnerName: string, vote: "approved" | "rejected") => {
     setState((prev) => ({
@@ -179,17 +279,45 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }));
   };
 
-  const addProposal = (proposal: Omit<Proposal, "id" | "votes" | "status" | "approvalPercentage">) => {
-    const newProposal: Proposal = {
-      ...proposal,
-      id: String(state.proposals.length + 1),
-      status: "active",
-      approvalPercentage: 0,
-      votes: state.partners
-        .filter((p) => p.status === "active")
-        .map((p) => ({ partner: p.name, status: "pending" as const, tokens: p.tokens })),
-    };
-    setState((prev) => ({ ...prev, proposals: [newProposal, ...prev.proposals] }));
+  const addProposal = async (proposal: Omit<Proposal, "id" | "votes" | "status" | "approvalPercentage">) => {
+    if (!state.companyId) {
+      // Fallback to local-only
+      const newProposal: Proposal = {
+        ...proposal,
+        id: String(state.proposals.length + 1),
+        status: "active",
+        approvalPercentage: 0,
+        votes: state.partners
+          .filter((p) => p.status === "active")
+          .map((p) => ({ partner: p.name, status: "pending" as const, tokens: p.tokens })),
+      };
+      setState((prev) => ({ ...prev, proposals: [newProposal, ...prev.proposals] }));
+      return;
+    }
+
+    // Save to database
+    const deadlineDays = proposal.daysRemaining || 3;
+    const closesAt = new Date();
+    closesAt.setDate(closesAt.getDate() + deadlineDays);
+
+    const { data: { user: authUser } } = await supabase.auth.getUser();
+
+    const { error } = await supabase.from("proposals").insert({
+      company_id: state.companyId,
+      title: proposal.title,
+      description: proposal.description,
+      quorum_required: proposal.quorum,
+      closes_at: closesAt.toISOString(),
+      created_by: authUser?.id || null,
+    });
+
+    if (error) {
+      console.error("Error creating proposal:", error);
+      return;
+    }
+
+    // Reload data
+    await loadFromDatabase();
   };
 
   const updateCompanySetup = (setup: CompanySetup) => {
@@ -235,8 +363,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const refreshData = async () => {
+    await loadFromDatabase();
+  };
+
   return (
-    <AppContext.Provider value={{ ...state, castVote, addProposal, updateCompanySetup }}>
+    <AppContext.Provider value={{ ...state, castVote, addProposal, updateCompanySetup, refreshData }}>
       {children}
     </AppContext.Provider>
   );

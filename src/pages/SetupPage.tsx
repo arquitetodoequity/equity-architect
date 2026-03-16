@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Building2, Users, Layers, Clock, ArrowLeftRight, Shield, CheckCircle2, Plus, X, Info, HelpCircle } from "lucide-react";
+import { Building2, Users, Layers, Clock, ArrowLeftRight, Shield, CheckCircle2, Plus, X, Info, HelpCircle, Loader2 } from "lucide-react";
 import { PieChart } from "lucide-react";
 import { toast } from "sonner";
 import { useAppContext } from "@/contexts/AppContext";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SetupPartner {
   name: string;
@@ -87,30 +89,139 @@ export default function SetupPage() {
     setTokenTypes((prev) => prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]);
   };
 
-  const handleFinish = () => {
-    updateCompanySetup({
-      companyName,
-      totalSupply: parseInt(totalSupply) || 1000000,
-      partners,
-      poolReserve,
-      tokenTypes,
-      hasVesting,
-      cliffMonths,
-      vestingMonths,
-      vestingType,
-      transferRules: {
-        between: transferBetween,
-        external: transferExternal,
-        exit: exitRule,
-        nonCompete,
-        nonCompeteMonths,
-      },
-      quorums,
-      newPartnerMode,
-      votingDeadline,
-    });
-    toast.success("Partnership instalado com sucesso!");
-    navigate("/dashboard");
+  const [saving, setSaving] = useState(false);
+
+  const handleFinish = async () => {
+    setSaving(true);
+    try {
+      // Get current user
+      // Get current user
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (!authUser) throw new Error("Não autenticado");
+
+      // 1. Create company
+      const { data: company, error: companyErr } = await supabase
+        .from("companies")
+        .insert({
+          name: companyName,
+          total_supply: parseInt(totalSupply) || 1000000,
+          sector,
+          monthly_revenue: revenue,
+        })
+        .select()
+        .single();
+      if (companyErr) throw companyErr;
+
+      const companyId = company.id;
+
+      // 2. Link profile to company
+      await supabase.from("profiles").update({ company_id: companyId }).eq("id", authUser.id);
+
+      // 3. Insert partners
+      const partnerRows: {
+        company_id: string;
+        name: string;
+        role: string;
+        percentage: number;
+        token_amount: number;
+        partner_type: "founder" | "key_person" | "pool";
+        status: "active" | "inactive" | "reserve";
+      }[] = partners.map((p) => ({
+        company_id: companyId,
+        name: p.name,
+        role: p.role,
+        percentage: p.percentage,
+        token_amount: Math.round((p.percentage / 100) * (parseInt(totalSupply) || 1000000)),
+        partner_type: (p.type === "Fundador" ? "founder" : "key_person") as "founder" | "key_person" | "pool",
+        status: "active" as "active" | "inactive" | "reserve",
+      }));
+
+      // Add pool reserve as partner
+      if (poolReserve > 0) {
+        partnerRows.push({
+          company_id: companyId,
+          name: "Pool de Reserva",
+          role: "—",
+          percentage: poolReserve,
+          token_amount: Math.round((poolReserve / 100) * (parseInt(totalSupply) || 1000000)),
+          partner_type: "pool" as const,
+          status: "reserve" as const,
+        });
+      }
+
+      if (partnerRows.length > 0) {
+        const { error: partnersErr } = await supabase.from("partners").insert(partnerRows);
+        if (partnersErr) throw partnersErr;
+      }
+
+      // 4. Insert token types
+      const tokenTypeMap: Record<string, "ON" | "PN" | "PHANTOM" | "GOLDEN"> = {
+        ON: "ON", PN: "PN", PHANTOM: "PHANTOM", GOLDEN: "GOLDEN",
+      };
+      const tokenRows = tokenTypes.map((t) => ({
+        company_id: companyId,
+        name: tokenTypeMap[t] || ("ON" as const),
+        has_voting_rights: t === "ON" || t === "GOLDEN",
+        has_economic_rights: t === "ON" || t === "PN" || t === "PHANTOM",
+      }));
+      if (tokenRows.length > 0) {
+        const { error: tokenErr } = await supabase.from("token_types").insert(tokenRows);
+        if (tokenErr) throw tokenErr;
+      }
+
+      // 5. Insert vesting config
+      const { error: vestingErr } = await supabase.from("vesting_configs").insert({
+        company_id: companyId,
+        has_vesting: hasVesting,
+        cliff_months: hasCliff ? cliffMonths : 0,
+        vesting_months: vestingMonths,
+        vesting_type: vestingType as "time" | "milestone",
+      });
+      if (vestingErr) throw vestingErr;
+
+      // 6. Insert governance rules
+      const { error: govErr } = await supabase.from("governance_rules").insert({
+        company_id: companyId,
+        quorum_standard: quorums.operational,
+        quorum_entry: quorums.entry,
+        quorum_exit: quorums.exit,
+        quorum_rules_change: quorums.rulesChange,
+        quorum_dissolution: quorums.dissolution,
+        new_partner_mode: newPartnerMode as "pool" | "new_emission" | "both",
+      });
+      if (govErr) throw govErr;
+
+      // Update local context too
+      updateCompanySetup({
+        companyName,
+        totalSupply: parseInt(totalSupply) || 1000000,
+        partners,
+        poolReserve,
+        tokenTypes,
+        hasVesting,
+        cliffMonths,
+        vestingMonths,
+        vestingType,
+        transferRules: {
+          between: transferBetween,
+          external: transferExternal,
+          exit: exitRule,
+          nonCompete,
+          nonCompeteMonths,
+        },
+        quorums,
+        newPartnerMode,
+        votingDeadline,
+      });
+
+      toast.success("Partnership instalado com sucesso!");
+      navigate("/dashboard");
+    } catch (err: any) {
+      console.error("Setup error:", err);
+      toast.error(err.message || "Erro ao salvar configuração");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const canContinue = () => {
@@ -184,9 +295,11 @@ export default function SetupPage() {
 
           <button
             onClick={handleFinish}
-            className="w-full max-w-[400px] mx-auto h-11 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-fast hover:opacity-90 block"
+            disabled={saving}
+            className="w-full max-w-[400px] mx-auto h-11 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-fast hover:opacity-90 flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            Acessar o dashboard
+            {saving && <Loader2 className="h-4 w-4 animate-spin" />}
+            {saving ? "Salvando..." : "Acessar o dashboard"}
           </button>
         </div>
       </div>
