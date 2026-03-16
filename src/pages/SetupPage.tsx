@@ -295,9 +295,11 @@ export default function SetupPage() {
 
           <button
             onClick={handleFinish}
-            className="w-full max-w-[400px] mx-auto h-11 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-fast hover:opacity-90 block"
+            disabled={saving}
+            className="w-full max-w-[400px] mx-auto h-11 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-fast hover:opacity-90 flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            Acessar o dashboard
+            {saving && <Loader2 className="h-4 w-4 animate-spin" />}
+            {saving ? "Salvando..." : "Acessar o dashboard"}
           </button>
         </div>
       </div>
