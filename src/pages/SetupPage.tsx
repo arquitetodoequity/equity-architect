@@ -94,7 +94,7 @@ export default function SetupPage() {
   const handleFinish = async () => {
     setSaving(true);
     try {
-      const { user } = useAuth ? {} as any : {};
+      // Get current user
       // Get current user
       const { data: { user: authUser } } = await supabase.auth.getUser();
       if (!authUser) throw new Error("Não autenticado");
