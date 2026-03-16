@@ -1,16 +1,33 @@
+import { useState } from "react";
 import { useAppContext } from "@/contexts/AppContext";
 import { Bell, Plus, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { toast } from "sonner";
+import CreateProposalModal from "@/components/CreateProposalModal";
 
 const PIE_COLORS = ["#1E3A8A", "#2563EB", "#60A5FA", "#CBD5E1"];
 
 export default function DashboardPage() {
-  const { partners, history, proposals, companyName } = useAppContext();
+  const { partners, history, proposals, companyName, addProposal } = useAppContext();
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
   const activeProposal = proposals.find((p) => p.status === "active");
 
   const pieData = partners.map((p) => ({ name: p.name, value: p.percentage }));
+
+  const handleCreateProposal = (formData: { title: string; description: string; quorum: string; deadline: string }) => {
+    addProposal({
+      number: `#${String(proposals.length + 1).padStart(3, "0")}`,
+      title: formData.title,
+      description: formData.description,
+      quorum: parseInt(formData.quorum),
+      daysRemaining: formData.deadline === "24h" ? 1 : formData.deadline === "48h" ? 2 : formData.deadline === "72h" ? 3 : 7,
+      date: new Date().toLocaleDateString("pt-BR"),
+    });
+    setModalOpen(false);
+    toast.success("Proposta criada com sucesso");
+  };
 
   return (
     <div className="p-6 md:p-8 space-y-8">
@@ -21,7 +38,10 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold">Cap Table — {companyName}</h1>
           <p className="text-sm text-muted-foreground mt-1">Visão geral das participações societárias</p>
         </div>
-        <button className="h-9 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-fast hover:opacity-90 flex items-center gap-2 shrink-0">
+        <button
+          onClick={() => setModalOpen(true)}
+          className="h-9 px-4 rounded-lg bg-primary text-primary-foreground text-sm font-medium transition-fast hover:opacity-90 flex items-center gap-2 shrink-0"
+        >
           <Plus className="h-4 w-4" /> Nova Proposta
         </button>
       </div>
@@ -184,6 +204,8 @@ export default function DashboardPage() {
           ))}
         </div>
       </div>
+
+      <CreateProposalModal open={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleCreateProposal} />
     </div>
   );
 }

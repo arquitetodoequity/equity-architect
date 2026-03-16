@@ -88,6 +88,27 @@ export default function SetupPage() {
   };
 
   const handleFinish = () => {
+    updateCompanySetup({
+      companyName,
+      totalSupply: parseInt(totalSupply) || 1000000,
+      partners,
+      poolReserve,
+      tokenTypes,
+      hasVesting,
+      cliffMonths,
+      vestingMonths,
+      vestingType,
+      transferRules: {
+        between: transferBetween,
+        external: transferExternal,
+        exit: exitRule,
+        nonCompete,
+        nonCompeteMonths,
+      },
+      quorums,
+      newPartnerMode,
+      votingDeadline,
+    });
     toast.success("Partnership instalado com sucesso!");
     navigate("/dashboard");
   };
