@@ -20,6 +20,7 @@ type VestingType = "time" | "milestone";
 
 export default function SetupPage() {
   const navigate = useNavigate();
+  const { updateCompanySetup } = useAppContext();
   const [step, setStep] = useState(1);
   const totalSteps = 6;
 
