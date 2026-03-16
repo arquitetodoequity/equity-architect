@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Building2, Users, Layers, Clock, ArrowLeftRight, Shield, CheckCircle2, Plus, X, Info, HelpCircle } from "lucide-react";
+import { Building2, Users, Layers, Clock, ArrowLeftRight, Shield, CheckCircle2, Plus, X, Info, HelpCircle, Loader2 } from "lucide-react";
 import { PieChart } from "lucide-react";
 import { toast } from "sonner";
 import { useAppContext } from "@/contexts/AppContext";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SetupPartner {
   name: string;
