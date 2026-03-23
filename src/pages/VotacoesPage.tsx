@@ -34,8 +34,8 @@ export default function VotacoesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <p className="text-xs text-muted-foreground mb-1">Governança &gt; Votações</p>
-          <h1 className="text-2xl font-bold">Governança — Votações</h1>
+          <p className="section-label mb-1">Governança &gt; Votações</p>
+          <h1 className="text-2xl font-medium">Governança — Votações</h1>
         </div>
         <button
           onClick={() => setModalOpen(true)}
