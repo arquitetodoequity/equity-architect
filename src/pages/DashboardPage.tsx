@@ -34,8 +34,8 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <p className="text-xs text-muted-foreground mb-1">Dashboard &gt; Cap Table</p>
-          <h1 className="text-2xl font-bold">Cap Table — {companyName}</h1>
+          <p className="section-label mb-1">Dashboard &gt; Cap Table</p>
+          <h1 className="text-2xl font-medium">Cap Table — {companyName}</h1>
           <p className="text-sm text-muted-foreground mt-1">Visão geral das participações societárias</p>
         </div>
         <button
