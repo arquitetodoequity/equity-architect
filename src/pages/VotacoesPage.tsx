@@ -48,7 +48,7 @@ export default function VotacoesPage() {
       {/* Active proposals */}
       <section>
         <div className="flex items-center gap-3 mb-4">
-          <h2 className="text-lg font-bold">Em andamento</h2>
+          <h2 className="text-lg font-medium">Em andamento</h2>
           <span className="h-5 px-2 rounded-full bg-warning/10 text-warning text-xs font-medium flex items-center">
             {activeProposals.length} ativa{activeProposals.length !== 1 ? "s" : ""}
           </span>
