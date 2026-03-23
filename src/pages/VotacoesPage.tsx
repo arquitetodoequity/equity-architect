@@ -158,7 +158,7 @@ export default function VotacoesPage() {
                   <td className="px-6 py-3 text-muted-foreground">{p.participation}</td>
                   <td className="px-6 py-3 text-muted-foreground">{p.date}</td>
                   <td className="px-6 py-3">
-                    <button className="text-xs text-primary transition-fast hover:underline">Ver</button>
+                    <button className="text-xs text-gold-dark transition-fast hover:underline">Ver</button>
                   </td>
                 </tr>
               ))}
