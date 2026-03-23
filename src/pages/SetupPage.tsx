@@ -619,7 +619,7 @@ export default function SetupPage() {
 
               {/* Quorum table */}
               <div className="space-y-4">
-                <h3 className="text-sm font-bold">Quórum por tipo de decisão</h3>
+                <h3 className="text-sm font-medium">Quórum por tipo de decisão</h3>
                 {[
                   { key: "operational" as const, label: "Decisões operacionais do dia a dia" },
                   { key: "entry" as const, label: "Entrada de novo sócio" },
