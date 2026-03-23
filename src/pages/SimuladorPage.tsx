@@ -57,8 +57,8 @@ export default function SimuladorPage() {
       </div>
 
       {/* Configuration card */}
-      <div className="rounded-lg border border-border bg-background shadow-sm p-6 space-y-4">
-        <h2 className="text-lg font-bold">Configurar distribuição</h2>
+      <div className="rounded-lg border border-border bg-background p-6 space-y-4">
+        <h2 className="text-lg font-medium">Configurar distribuição</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="text-sm font-medium">Valor total a distribuir</label>
