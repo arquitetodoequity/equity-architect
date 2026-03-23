@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { PieChart, Mail, Eye, EyeOff, Check, Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,7 +14,14 @@ export default function LoginPage() {
   const [fullName, setFullName] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("forgot") === "1") {
+      setIsForgotPassword(true);
+    }
+  }, [searchParams]);
 
   // If already logged in, redirect
   if (user) {
