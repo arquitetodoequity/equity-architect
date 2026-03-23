@@ -18,7 +18,7 @@ export default function SociosPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
         {/* Table */}
-        <div className="rounded-lg border border-border bg-background shadow-sm">
+        <div className="rounded-lg border border-border bg-background">
           <div className="p-6 pb-4 flex items-center gap-3">
             <h2 className="text-lg font-bold">Todos os sócios</h2>
             <span className="h-5 px-2 rounded-full bg-success/10 text-success text-xs font-medium flex items-center">
