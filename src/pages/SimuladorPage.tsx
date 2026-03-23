@@ -115,7 +115,6 @@ export default function SimuladorPage() {
                   <th className="px-6 py-3 font-medium text-muted-foreground">Cota</th>
                   <th className="px-6 py-3 font-medium text-muted-foreground">Cálculo</th>
                   <th className="px-6 py-3 font-medium text-muted-foreground">Valor a receber</th>
-                  <th className="px-6 py-3 font-medium text-muted-foreground">Chave PIX</th>
                 </tr>
               </thead>
               <tbody>
@@ -127,12 +126,6 @@ export default function SimuladorPage() {
                       {r.percentage}% × {formatCurrency(numericVal)}
                     </td>
                     <td className="px-6 py-3 font-bold text-gold">{formatCurrency(r.amount)}</td>
-                    <td className="px-6 py-3">
-                      <input
-                        placeholder="Chave PIX"
-                        className="w-full h-8 px-2 rounded-md border border-border bg-background text-xs transition-fast focus:outline-none focus:ring-1 focus:ring-ring"
-                      />
-                    </td>
                   </tr>
                 ))}
                 {poolPartner && (
@@ -141,7 +134,7 @@ export default function SimuladorPage() {
                     <td className="px-6 py-3 text-muted-foreground">{poolPartner.percentage}%</td>
                     <td className="px-6 py-3 text-muted-foreground">—</td>
                     <td className="px-6 py-3 text-muted-foreground">não distribuído</td>
-                    <td className="px-6 py-3">—</td>
+
                   </tr>
                 )}
                 <tr className="border-t border-border font-bold">
