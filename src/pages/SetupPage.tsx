@@ -369,7 +369,7 @@ export default function SetupPage() {
           {step === 2 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Quem são os sócios e quanto cada um recebe?</h1>
+                <h1 className="text-2xl font-medium">Quem são os sócios e quanto cada um recebe?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Defina a distribuição inicial. Você pode reservar parte para novos sócios ou vesting futuro.</p>
               </div>
 
