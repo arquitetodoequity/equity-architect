@@ -55,7 +55,7 @@ export default function AppSidebar() {
       {/* Footer */}
       <div className="p-4 border-t border-sidebar-fg/10">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-full bg-sidebar-active flex items-center justify-center text-sm font-medium">
+          <div className="h-9 w-9 rounded-full bg-gold flex items-center justify-center text-sm font-medium text-foreground">
             {currentUser.initials}
           </div>
           <div className="min-w-0 flex-1">

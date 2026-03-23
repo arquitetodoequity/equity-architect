@@ -2,7 +2,7 @@ import { useAppContext } from "@/contexts/AppContext";
 import { Eye } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
-const PIE_COLORS = ["#1E3A8A", "#2563EB", "#60A5FA", "#CBD5E1"];
+const PIE_COLORS = ["#1A1A1A", "#C5A059", "#8B7340", "#D4C5A0"];
 
 export default function SociosPage() {
   const { partners, companyName } = useAppContext();
