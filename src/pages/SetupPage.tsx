@@ -613,7 +613,7 @@ export default function SetupPage() {
           {step === 6 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Como as decisões serão tomadas?</h1>
+                <h1 className="text-2xl font-medium">Como as decisões serão tomadas?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Defina o quórum para cada tipo de decisão. Você pode ajustar depois.</p>
               </div>
 
