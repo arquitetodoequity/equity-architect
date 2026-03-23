@@ -591,7 +591,7 @@ export default function SetupPage() {
 
               {/* Block C */}
               <div className="space-y-3">
-                <h3 className="text-sm font-bold">Saída de sócio</h3>
+                <h3 className="text-sm font-medium">Saída de sócio</h3>
                 <RadioGroup value={exitRule} onChange={(v) => setExitRule(v as ExitRule)} options={[
                   { value: "fair_value", label: "Venda pelo valor justo acordado no MOU" },
                   { value: "original_value", label: "Recompra pelo grupo pelo valor original de entrada" },
