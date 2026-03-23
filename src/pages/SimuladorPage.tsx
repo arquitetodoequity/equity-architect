@@ -41,8 +41,8 @@ export default function SimuladorPage() {
     <div className="p-6 md:p-8 space-y-8">
       {/* Header */}
       <div>
-        <p className="text-xs text-muted-foreground mb-1">Simulador &gt; Distribuição</p>
-        <h1 className="text-2xl font-bold">Simulador de Distribuição</h1>
+        <p className="section-label mb-1">Simulador &gt; Distribuição</p>
+        <h1 className="text-2xl font-medium">Simulador de Distribuição</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Calcule o valor de cada sócio. O pagamento continua sendo feito pelo seu banco.
         </p>
