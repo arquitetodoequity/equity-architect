@@ -274,7 +274,7 @@ export default function SetupPage() {
           <div className="w-16 h-0.5 bg-gold mx-auto" />
 
           <div>
-            <h1 className="text-4xl font-bold">Partnership instalado.</h1>
+            <h1 className="text-4xl font-medium">Partnership instalado.</h1>
             <p className="text-muted-foreground mt-2">Seu sistema de cotas está configurado e pronto para operar.</p>
           </div>
 
