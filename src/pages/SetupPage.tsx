@@ -565,7 +565,7 @@ export default function SetupPage() {
           {step === 5 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Quais são as regras de transferência de cotas?</h1>
+                <h1 className="text-2xl font-medium">Quais são as regras de transferência de cotas?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Defina o que acontece quando um sócio quer sair ou transferir sua participação.</p>
               </div>
 
