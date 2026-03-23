@@ -106,12 +106,68 @@ const emptyState: AppState = {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
+  const { user, isDemo } = useAuth();
   const [state, setState] = useState<AppState>(emptyState);
 
   const loadFromDatabase = async () => {
-    if (!user) {
+    if (!user && !isDemo) {
       setState({ ...emptyState, loading: false });
+      return;
+    }
+
+    if (isDemo) {
+      setState({
+        companyName: "Empresa Demo",
+        companyId: "demo",
+        partners: [
+          { id: "d1", name: "Ana Silva", role: "CEO", percentage: 40, tokens: 400000, status: "active", initials: "AS" },
+          { id: "d2", name: "Bruno Costa", role: "CTO", percentage: 30, tokens: 300000, status: "active", initials: "BC" },
+          { id: "d3", name: "Carla Dias", role: "COO", percentage: 20, tokens: 200000, status: "active", initials: "CD" },
+          { id: "d4", name: "Pool de Reserva", role: "—", percentage: 10, tokens: 100000, status: "reserve", initials: "PR" },
+        ],
+        proposals: [
+          {
+            id: "dp1",
+            number: "#001",
+            title: "Aprovação de novo sócio investidor",
+            description: "Proposta para entrada de investidor-anjo com 5% de participação.",
+            status: "active",
+            quorum: 67,
+            approvalPercentage: 57,
+            daysRemaining: 5,
+            votes: [
+              { partner: "Ana Silva", status: "approved", tokens: 400000 },
+              { partner: "Bruno Costa", status: "pending", tokens: 300000 },
+              { partner: "Carla Dias", status: "pending", tokens: 200000 },
+            ],
+            date: new Date().toLocaleDateString("pt-BR"),
+          },
+          {
+            id: "dp2",
+            number: "#002",
+            title: "Distribuição de lucros Q1 2026",
+            description: "Distribuição proporcional dos lucros do primeiro trimestre.",
+            status: "approved",
+            quorum: 51,
+            approvalPercentage: 100,
+            votes: [
+              { partner: "Ana Silva", status: "approved", tokens: 400000 },
+              { partner: "Bruno Costa", status: "approved", tokens: 300000 },
+              { partner: "Carla Dias", status: "approved", tokens: 200000 },
+            ],
+            date: new Date(Date.now() - 7 * 86400000).toLocaleDateString("pt-BR"),
+            participation: "100%",
+          },
+        ],
+        history: [
+          { id: "dh1", date: "jan/2026", description: "Sistema criado. Cotas iniciais distribuídas.", color: "blue" },
+          { id: "dh2", date: "mar/2026", description: "Distribuição de lucros Q1 2026 (aprovada)", color: "green" },
+        ],
+        totalSupply: 1000000,
+        systemCreatedDate: "15 de janeiro de 2026",
+        currentUser: { name: "Usuário Demo", company: "Empresa Demo", initials: "UD" },
+        loading: false,
+      });
       return;
     }
 
@@ -261,7 +317,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     loadFromDatabase();
-  }, [user]);
+  }, [user, isDemo]);
 
   const castVote = (proposalId: string, partnerName: string, vote: "approved" | "rejected") => {
     setState((prev) => ({

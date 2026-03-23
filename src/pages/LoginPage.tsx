@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, signUp, user, isDemo, startDemo } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,10 +24,15 @@ export default function LoginPage() {
   }, [searchParams]);
 
   // If already logged in, redirect
-  if (user) {
+  if (user || isDemo) {
     navigate("/dashboard", { replace: true });
     return null;
   }
+
+  const handleDemo = () => {
+    startDemo();
+    navigate("/onboarding");
+  };
 
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -248,6 +253,23 @@ export default function LoginPage() {
                   </button>
                 </p>
               </div>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">ou</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleDemo}
+                className="w-full h-10 rounded-md border border-border text-sm font-medium text-muted-foreground transition-fast hover:bg-surface hover:text-foreground"
+              >
+                Explorar como demo
+              </button>
             </>
           )}
         </div>
