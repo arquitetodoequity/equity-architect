@@ -454,7 +454,7 @@ export default function SetupPage() {
                         <div className={`h-5 w-5 rounded border-2 flex items-center justify-center text-xs ${selected ? "border-primary bg-primary text-primary-foreground" : "border-border"}`}>
                           {selected && "✓"}
                         </div>
-                        <p className="text-sm font-bold">{card.label}</p>
+                        <p className="text-sm font-medium">{card.label}</p>
                       </div>
                       <p className="text-xs text-muted-foreground mt-2 ml-8">{card.desc}</p>
                       <div className="flex flex-wrap gap-2 mt-3 ml-8">
