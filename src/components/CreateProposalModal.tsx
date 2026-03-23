@@ -27,7 +27,7 @@ export default function CreateProposalModal({ open, onClose, onSubmit }: CreateP
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-foreground/40" onClick={onClose} />
       <div className="relative bg-background rounded-xl shadow-lg border border-border w-full max-w-lg p-6 space-y-5">
-        <h2 className="text-xl font-bold">Nova proposta de governança</h2>
+        <h2 className="text-xl font-medium">Nova proposta de governança</h2>
 
         <div className="space-y-4">
           <div>

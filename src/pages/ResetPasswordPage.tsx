@@ -87,7 +87,7 @@ export default function ResetPasswordPage() {
         {flowState === "checking" && (
           <>
             <div>
-              <h2 className="text-2xl font-bold">Redefinir senha</h2>
+              <h2 className="text-2xl font-medium">Redefinir senha</h2>
               <p className="text-sm text-muted-foreground mt-1">Verificando link de recuperação...</p>
             </div>
             <div className="flex items-center justify-center py-8">
@@ -99,7 +99,7 @@ export default function ResetPasswordPage() {
         {flowState === "invalid" && (
           <>
             <div>
-              <h2 className="text-2xl font-bold">Link inválido ou expirado</h2>
+              <h2 className="text-2xl font-medium">Link inválido ou expirado</h2>
               <p className="text-sm text-muted-foreground mt-1">
                 Este link de recuperação já foi utilizado ou expirou. Solicite um novo link.
               </p>
@@ -119,7 +119,7 @@ export default function ResetPasswordPage() {
         {flowState === "ready" && (
           <>
             <div>
-              <h2 className="text-2xl font-bold">Redefinir senha</h2>
+              <h2 className="text-2xl font-medium">Redefinir senha</h2>
               <p className="text-sm text-muted-foreground mt-1">Digite sua nova senha abaixo.</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">

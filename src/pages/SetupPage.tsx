@@ -274,7 +274,7 @@ export default function SetupPage() {
           <div className="w-16 h-0.5 bg-gold mx-auto" />
 
           <div>
-            <h1 className="text-4xl font-bold">Partnership instalado.</h1>
+            <h1 className="text-4xl font-medium">Partnership instalado.</h1>
             <p className="text-muted-foreground mt-2">Seu sistema de cotas está configurado e pronto para operar.</p>
           </div>
 
@@ -335,7 +335,7 @@ export default function SetupPage() {
           {step === 1 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Vamos começar pela empresa</h1>
+                <h1 className="text-2xl font-medium">Vamos começar pela empresa</h1>
                 <p className="text-sm text-muted-foreground mt-2">Estas informações definem a base do seu sistema de cotas.</p>
               </div>
               <div className="space-y-4">
@@ -369,7 +369,7 @@ export default function SetupPage() {
           {step === 2 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Quem são os sócios e quanto cada um recebe?</h1>
+                <h1 className="text-2xl font-medium">Quem são os sócios e quanto cada um recebe?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Defina a distribuição inicial. Você pode reservar parte para novos sócios ou vesting futuro.</p>
               </div>
 
@@ -436,7 +436,7 @@ export default function SetupPage() {
           {step === 3 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Que tipo de cotas existirão?</h1>
+                <h1 className="text-2xl font-medium">Que tipo de cotas existirão?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Você pode ter tipos diferentes de participação para sócios, colaboradores e investidores.</p>
               </div>
               <div className="space-y-3">
@@ -454,7 +454,7 @@ export default function SetupPage() {
                         <div className={`h-5 w-5 rounded border-2 flex items-center justify-center text-xs ${selected ? "border-primary bg-primary text-primary-foreground" : "border-border"}`}>
                           {selected && "✓"}
                         </div>
-                        <p className="text-sm font-bold">{card.label}</p>
+                        <p className="text-sm font-medium">{card.label}</p>
                       </div>
                       <p className="text-xs text-muted-foreground mt-2 ml-8">{card.desc}</p>
                       <div className="flex flex-wrap gap-2 mt-3 ml-8">
@@ -479,7 +479,7 @@ export default function SetupPage() {
           {step === 4 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Haverá vesting?</h1>
+                <h1 className="text-2xl font-medium">Haverá vesting?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Vesting define quando cada sócio realmente "ganha" sua participação ao longo do tempo.</p>
               </div>
 
@@ -565,13 +565,13 @@ export default function SetupPage() {
           {step === 5 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Quais são as regras de transferência de cotas?</h1>
+                <h1 className="text-2xl font-medium">Quais são as regras de transferência de cotas?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Defina o que acontece quando um sócio quer sair ou transferir sua participação.</p>
               </div>
 
               {/* Block A */}
               <div className="space-y-3">
-                <h3 className="text-sm font-bold">Transferência entre sócios existentes</h3>
+                <h3 className="text-sm font-medium">Transferência entre sócios existentes</h3>
                 <RadioGroup value={transferBetween} onChange={(v) => setTransferBetween(v as TransferBetween)} options={[
                   { value: "free", label: "Livre — qualquer sócio pode transferir para outro" },
                   { value: "approval", label: "Requer aprovação do grupo" },
@@ -581,7 +581,7 @@ export default function SetupPage() {
 
               {/* Block B */}
               <div className="space-y-3">
-                <h3 className="text-sm font-bold">Transferência para terceiros (fora do grupo)</h3>
+                <h3 className="text-sm font-medium">Transferência para terceiros (fora do grupo)</h3>
                 <RadioGroup value={transferExternal} onChange={(v) => setTransferExternal(v as TransferExternal)} options={[
                   { value: "unanimous", label: "Permitida com aprovação unânime" },
                   { value: "preference", label: "Não permitida — direito de preferência para sócios atuais" },
@@ -591,7 +591,7 @@ export default function SetupPage() {
 
               {/* Block C */}
               <div className="space-y-3">
-                <h3 className="text-sm font-bold">Saída de sócio</h3>
+                <h3 className="text-sm font-medium">Saída de sócio</h3>
                 <RadioGroup value={exitRule} onChange={(v) => setExitRule(v as ExitRule)} options={[
                   { value: "fair_value", label: "Venda pelo valor justo acordado no MOU" },
                   { value: "original_value", label: "Recompra pelo grupo pelo valor original de entrada" },
@@ -613,13 +613,13 @@ export default function SetupPage() {
           {step === 6 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Como as decisões serão tomadas?</h1>
+                <h1 className="text-2xl font-medium">Como as decisões serão tomadas?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Defina o quórum para cada tipo de decisão. Você pode ajustar depois.</p>
               </div>
 
               {/* Quorum table */}
               <div className="space-y-4">
-                <h3 className="text-sm font-bold">Quórum por tipo de decisão</h3>
+                <h3 className="text-sm font-medium">Quórum por tipo de decisão</h3>
                 {[
                   { key: "operational" as const, label: "Decisões operacionais do dia a dia" },
                   { key: "entry" as const, label: "Entrada de novo sócio" },
@@ -645,7 +645,7 @@ export default function SetupPage() {
 
               {/* New partners */}
               <div className="space-y-3">
-                <h3 className="text-sm font-bold">Novos sócios</h3>
+                <h3 className="text-sm font-medium">Novos sócios</h3>
                 <RadioGroup value={newPartnerMode} onChange={(v) => setNewPartnerMode(v as NewPartnerMode)} options={[
                   { value: "pool", label: "Transferência do pool de reserva (sem diluição)" },
                   { value: "new_emission", label: "Emissão de novos tokens (dilui todos proporcionalmente)" },

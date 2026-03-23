@@ -41,8 +41,8 @@ export default function SimuladorPage() {
     <div className="p-6 md:p-8 space-y-8">
       {/* Header */}
       <div>
-        <p className="text-xs text-muted-foreground mb-1">Simulador &gt; Distribuição</p>
-        <h1 className="text-2xl font-bold">Simulador de Distribuição</h1>
+        <p className="section-label mb-1">Simulador &gt; Distribuição</p>
+        <h1 className="text-2xl font-medium">Simulador de Distribuição</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Calcule o valor de cada sócio. O pagamento continua sendo feito pelo seu banco.
         </p>
@@ -57,8 +57,8 @@ export default function SimuladorPage() {
       </div>
 
       {/* Configuration card */}
-      <div className="rounded-lg border border-border bg-background shadow-sm p-6 space-y-4">
-        <h2 className="text-lg font-bold">Configurar distribuição</h2>
+      <div className="rounded-lg border border-border bg-background p-6 space-y-4">
+        <h2 className="text-lg font-medium">Configurar distribuição</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="text-sm font-medium">Valor total a distribuir</label>
@@ -100,9 +100,9 @@ export default function SimuladorPage() {
 
       {/* Results */}
       {showResults && numericVal > 0 && (
-        <div className="rounded-lg border border-border bg-background shadow-sm">
+        <div className="rounded-lg border border-border bg-background">
           <div className="p-6 pb-4">
-            <h2 className="text-lg font-bold">Resultado da distribuição — {periodo}</h2>
+            <h2 className="text-lg font-medium">Resultado da distribuição — {periodo}</h2>
             <p className="text-sm text-muted-foreground mt-1">
               Valor total: {formatCurrency(numericVal)} · Base: cotas de 01/03/2026 · {activePartners.length} sócios
             </p>
@@ -176,7 +176,7 @@ export default function SimuladorPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-foreground/40" onClick={() => setConfirmModal(false)} />
           <div className="relative bg-background rounded-xl shadow-lg border border-border w-full max-w-md p-6 space-y-4">
-            <h2 className="text-lg font-bold">Confirmar registro</h2>
+            <h2 className="text-lg font-medium">Confirmar registro</h2>
             <p className="text-sm text-muted-foreground">
               Confirmar que o pagamento foi realizado em {new Date().toLocaleDateString("pt-BR")} via banco?
             </p>

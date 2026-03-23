@@ -34,8 +34,8 @@ export default function VotacoesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <p className="text-xs text-muted-foreground mb-1">Governança &gt; Votações</p>
-          <h1 className="text-2xl font-bold">Governança — Votações</h1>
+          <p className="section-label mb-1">Governança &gt; Votações</p>
+          <h1 className="text-2xl font-medium">Governança — Votações</h1>
         </div>
         <button
           onClick={() => setModalOpen(true)}
@@ -48,7 +48,7 @@ export default function VotacoesPage() {
       {/* Active proposals */}
       <section>
         <div className="flex items-center gap-3 mb-4">
-          <h2 className="text-lg font-bold">Em andamento</h2>
+          <h2 className="text-lg font-medium">Em andamento</h2>
           <span className="h-5 px-2 rounded-full bg-warning/10 text-warning text-xs font-medium flex items-center">
             {activeProposals.length} ativa{activeProposals.length !== 1 ? "s" : ""}
           </span>
@@ -68,7 +68,7 @@ export default function VotacoesPage() {
                 </span>
                 <span className="text-sm text-muted-foreground">Proposta {p.number}</span>
               </div>
-              <h3 className="text-lg font-bold">{p.title}</h3>
+              <h3 className="text-lg font-medium">{p.title}</h3>
               <p className="text-sm text-muted-foreground">{p.description}</p>
 
               <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
@@ -127,12 +127,12 @@ export default function VotacoesPage() {
       {/* Completed proposals */}
       <section>
         <div className="flex items-center gap-3 mb-4">
-          <h2 className="text-lg font-bold">Concluídas</h2>
+          <h2 className="text-lg font-medium">Concluídas</h2>
           <span className="h-5 px-2 rounded-full bg-muted text-muted-foreground text-xs font-medium">
             {completedProposals.length} propostas
           </span>
         </div>
-        <div className="rounded-lg border border-border bg-background shadow-sm overflow-x-auto">
+        <div className="rounded-lg border border-border bg-background overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-surface text-left">

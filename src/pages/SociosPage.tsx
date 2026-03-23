@@ -11,16 +11,16 @@ export default function SociosPage() {
   return (
     <div className="p-6 md:p-8 space-y-8">
       <div>
-        <p className="text-xs text-muted-foreground mb-1">Sócios</p>
-        <h1 className="text-2xl font-bold">Sócios — {companyName}</h1>
+        <p className="section-label mb-1">Sócios</p>
+        <h1 className="text-2xl font-medium">Sócios — {companyName}</h1>
         <p className="text-sm text-muted-foreground mt-1">Visão detalhada de todos os sócios e participações</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
         {/* Table */}
-        <div className="rounded-lg border border-border bg-background shadow-sm">
+        <div className="rounded-lg border border-border bg-background">
           <div className="p-6 pb-4 flex items-center gap-3">
-            <h2 className="text-lg font-bold">Todos os sócios</h2>
+            <h2 className="text-lg font-medium">Todos os sócios</h2>
             <span className="h-5 px-2 rounded-full bg-success/10 text-success text-xs font-medium flex items-center">
               {partners.filter((p) => p.status === "active").length} ativos
             </span>
@@ -74,8 +74,8 @@ export default function SociosPage() {
         </div>
 
         {/* Chart */}
-        <div className="rounded-lg border border-border bg-background shadow-sm p-6">
-          <h2 className="text-lg font-bold mb-4">Distribuição</h2>
+        <div className="rounded-lg border border-border bg-background p-6">
+          <h2 className="text-lg font-medium mb-4">Distribuição</h2>
           <div className="h-52">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>

@@ -34,8 +34,8 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <p className="text-xs text-muted-foreground mb-1">Dashboard &gt; Cap Table</p>
-          <h1 className="text-2xl font-bold">Cap Table — {companyName}</h1>
+          <p className="section-label mb-1">Dashboard &gt; Cap Table</p>
+          <h1 className="text-2xl font-medium">Cap Table — {companyName}</h1>
           <p className="text-sm text-muted-foreground mt-1">Visão geral das participações societárias</p>
         </div>
         <button
@@ -85,9 +85,9 @@ export default function DashboardPage() {
         {/* Left column */}
         <div className="space-y-6">
           {/* Partners table */}
-          <div className="rounded-lg border border-border bg-background shadow-sm">
+          <div className="rounded-lg border border-border bg-background">
             <div className="p-6 pb-4 flex items-center gap-3">
-              <h2 className="text-lg font-bold">Sócios ativos</h2>
+              <h2 className="text-lg font-medium">Sócios ativos</h2>
               <span className="h-5 px-2 rounded-full bg-success/10 text-success text-xs font-medium flex items-center">
                 {partners.filter((p) => p.status === "active").length}
               </span>
@@ -138,8 +138,8 @@ export default function DashboardPage() {
           </div>
 
           {/* History */}
-          <div className="rounded-lg border border-border bg-background shadow-sm p-6">
-            <h2 className="text-lg font-bold mb-6">Histórico de decisões</h2>
+          <div className="rounded-lg border border-border bg-background p-6">
+            <h2 className="text-lg font-medium mb-6">Histórico de decisões</h2>
             <div className="space-y-6">
               {history.map((h, i) => (
                 <div key={h.id} className="flex gap-4">
@@ -164,8 +164,8 @@ export default function DashboardPage() {
         {/* Right column */}
         <div className="space-y-6">
           {/* Pie chart */}
-          <div className="rounded-lg border border-border bg-background shadow-sm p-6">
-            <h2 className="text-lg font-bold mb-4">Distribuição atual</h2>
+          <div className="rounded-lg border border-border bg-background p-6">
+            <h2 className="text-lg font-medium mb-4">Distribuição atual</h2>
             <div className="h-52">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -196,8 +196,8 @@ export default function DashboardPage() {
             { label: "Pool disponível", value: "10%", sub: "Reserva para novos sócios" },
             { label: "Última decisão", value: "28 fev 2026", sub: "Entrada de Marina Torres" },
           ].map((m) => (
-            <div key={m.label} className="rounded-lg border border-border bg-background shadow-sm p-6 transition-fast hover:shadow-md">
-              <p className="text-xs text-muted-foreground mb-1">{m.label}</p>
+            <div key={m.label} className="rounded-lg border border-border bg-background p-6 transition-fast hover:bg-surface">
+              <p className="section-label mb-1">{m.label}</p>
               <p className="text-2xl font-bold text-gold">{m.value}</p>
               <p className="text-xs text-muted-foreground mt-1">{m.sub}</p>
             </div>

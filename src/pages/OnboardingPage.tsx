@@ -73,7 +73,7 @@ export default function OnboardingPage() {
           {step === 1 && (
             <div className="space-y-6 text-center">
               <div>
-                <h1 className="text-2xl font-bold">Bem-vindo ao Arquiteto do Equity</h1>
+                <h1 className="text-2xl font-medium">Bem-vindo ao Arquiteto do Equity</h1>
                 <p className="text-sm text-muted-foreground mt-2">Vamos configurar sua empresa em menos de 5 minutos.</p>
               </div>
               <div className="space-y-4 text-left">
@@ -105,7 +105,7 @@ export default function OnboardingPage() {
           {step === 2 && (
             <div className="space-y-6 text-center">
               <div>
-                <h1 className="text-2xl font-bold">Quem são os sócios?</h1>
+                <h1 className="text-2xl font-medium">Quem são os sócios?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Adicione os sócios e suas participações.</p>
               </div>
               <div className="space-y-3 text-left">
@@ -153,7 +153,7 @@ export default function OnboardingPage() {
           {step === 3 && (
             <div className="space-y-6 text-center">
               <div>
-                <h1 className="text-2xl font-bold">Como as decisões serão tomadas?</h1>
+                <h1 className="text-2xl font-medium">Como as decisões serão tomadas?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Escolha o modelo de governança.</p>
               </div>
               <div className="space-y-3 text-left">
@@ -165,7 +165,7 @@ export default function OnboardingPage() {
                       governance === g.key ? "border-primary bg-primary/5" : "border-border hover:border-muted-foreground/30"
                     }`}
                   >
-                    <p className="text-sm font-bold">{g.label}</p>
+                    <p className="text-sm font-medium">{g.label}</p>
                     <p className="text-xs text-muted-foreground mt-1">{g.desc}</p>
                   </button>
                 ))}
@@ -194,7 +194,7 @@ export default function OnboardingPage() {
           {step === 4 && (
             <div className="space-y-6 text-center">
               <div>
-                <h1 className="text-2xl font-bold">Tudo pronto!</h1>
+                <h1 className="text-2xl font-medium">Tudo pronto!</h1>
                 <p className="text-sm text-muted-foreground mt-2">Seu sistema de cotas está configurado.</p>
               </div>
               <div className="rounded-lg border border-border bg-surface p-6 text-left space-y-3">
