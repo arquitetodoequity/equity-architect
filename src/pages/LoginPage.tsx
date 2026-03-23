@@ -89,7 +89,7 @@ export default function LoginPage() {
             <PieChart className="h-8 w-8 text-gold" />
             <span className="text-xl font-bold">Arquiteto do Equity</span>
           </div>
-          <h1 className="text-3xl font-bold leading-tight mb-4">
+          <h1 className="text-3xl font-medium leading-tight mb-4">
             Clareza de propriedade.
             <br />
             Sem burocracia.
