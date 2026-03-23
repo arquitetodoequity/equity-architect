@@ -73,7 +73,7 @@ export default function OnboardingPage() {
           {step === 1 && (
             <div className="space-y-6 text-center">
               <div>
-                <h1 className="text-2xl font-bold">Bem-vindo ao Arquiteto do Equity</h1>
+                <h1 className="text-2xl font-medium">Bem-vindo ao Arquiteto do Equity</h1>
                 <p className="text-sm text-muted-foreground mt-2">Vamos configurar sua empresa em menos de 5 minutos.</p>
               </div>
               <div className="space-y-4 text-left">
