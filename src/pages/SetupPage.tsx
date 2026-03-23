@@ -436,7 +436,7 @@ export default function SetupPage() {
           {step === 3 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Que tipo de cotas existirão?</h1>
+                <h1 className="text-2xl font-medium">Que tipo de cotas existirão?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Você pode ter tipos diferentes de participação para sócios, colaboradores e investidores.</p>
               </div>
               <div className="space-y-3">
