@@ -127,7 +127,7 @@ export default function VotacoesPage() {
       {/* Completed proposals */}
       <section>
         <div className="flex items-center gap-3 mb-4">
-          <h2 className="text-lg font-bold">Concluídas</h2>
+          <h2 className="text-lg font-medium">Concluídas</h2>
           <span className="h-5 px-2 rounded-full bg-muted text-muted-foreground text-xs font-medium">
             {completedProposals.length} propostas
           </span>
