@@ -21,6 +21,22 @@ export default function LoginPage() {
     return null;
   }
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/reset-password',
+    });
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success("Link de recuperação enviado para seu email!");
+      setIsForgotPassword(false);
+    }
+    setLoading(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) return;
