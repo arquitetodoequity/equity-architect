@@ -68,7 +68,7 @@ export default function VotacoesPage() {
                 </span>
                 <span className="text-sm text-muted-foreground">Proposta {p.number}</span>
               </div>
-              <h3 className="text-lg font-bold">{p.title}</h3>
+              <h3 className="text-lg font-medium">{p.title}</h3>
               <p className="text-sm text-muted-foreground">{p.description}</p>
 
               <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
