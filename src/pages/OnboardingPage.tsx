@@ -165,7 +165,7 @@ export default function OnboardingPage() {
                       governance === g.key ? "border-primary bg-primary/5" : "border-border hover:border-muted-foreground/30"
                     }`}
                   >
-                    <p className="text-sm font-bold">{g.label}</p>
+                    <p className="text-sm font-medium">{g.label}</p>
                     <p className="text-xs text-muted-foreground mt-1">{g.desc}</p>
                   </button>
                 ))}
