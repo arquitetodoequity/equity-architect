@@ -335,7 +335,7 @@ export default function SetupPage() {
           {step === 1 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Vamos começar pela empresa</h1>
+                <h1 className="text-2xl font-medium">Vamos começar pela empresa</h1>
                 <p className="text-sm text-muted-foreground mt-2">Estas informações definem a base do seu sistema de cotas.</p>
               </div>
               <div className="space-y-4">
