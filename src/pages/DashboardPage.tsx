@@ -138,8 +138,8 @@ export default function DashboardPage() {
           </div>
 
           {/* History */}
-          <div className="rounded-lg border border-border bg-background shadow-sm p-6">
-            <h2 className="text-lg font-bold mb-6">Histórico de decisões</h2>
+          <div className="rounded-lg border border-border bg-background p-6">
+            <h2 className="text-lg font-medium mb-6">Histórico de decisões</h2>
             <div className="space-y-6">
               {history.map((h, i) => (
                 <div key={h.id} className="flex gap-4">
