@@ -9,7 +9,7 @@
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
 
-    --card: 210 40% 98.8%;
+    --card: 0 0% 98.8%;
     --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
@@ -18,11 +18,11 @@
     --primary: 42 45% 56%;
     --primary-foreground: 0 0% 0%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 0 0% 96.1%;
     --secondary-foreground: 215 25% 27%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 40%;
 
     --accent: 42 45% 56%;
     --accent-foreground: 37 42% 39%;
@@ -39,7 +39,7 @@
 
     --radius: 0.5rem;
 
-    --sidebar-bg: 222 47% 11%;
+    --sidebar-bg: 0 0% 9%;
     --sidebar-fg: 0 0% 100%;
     --sidebar-active: 42 45% 56%;
 
@@ -47,9 +47,9 @@
     --gold-dark: 37 42% 39%;
     --gold-hover-bg: 36 100% 97%;
 
-    --surface: 210 40% 98.8%;
+    --surface: 0 0% 98.8%;
 
-    --action: 217 91% 53%;
+    --action: 42 45% 56%;
     --grafite: 0 0% 10%;
     --carvao: 0 0% 17%;
   }
