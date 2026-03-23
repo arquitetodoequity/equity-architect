@@ -153,7 +153,7 @@ export default function OnboardingPage() {
           {step === 3 && (
             <div className="space-y-6 text-center">
               <div>
-                <h1 className="text-2xl font-bold">Como as decisões serão tomadas?</h1>
+                <h1 className="text-2xl font-medium">Como as decisões serão tomadas?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Escolha o modelo de governança.</p>
               </div>
               <div className="space-y-3 text-left">
