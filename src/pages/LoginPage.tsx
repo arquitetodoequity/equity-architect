@@ -94,7 +94,7 @@ export default function LoginPage() {
             <br />
             Sem burocracia.
           </h1>
-          <div className="w-16 h-px bg-gold mb-8" />
+          <div className="w-16 h-0.5 bg-gold mb-8" />
           <ul className="space-y-4">
             {bullets.map((b) => (
               <li key={b} className="flex items-center gap-3 text-sm text-sidebar-fg/80">
