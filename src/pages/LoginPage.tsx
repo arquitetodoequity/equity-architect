@@ -117,7 +117,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold">
+            <h2 className="text-2xl font-medium">
               {isForgotPassword
                 ? "Recuperar senha"
                 : isSignUp

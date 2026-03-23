@@ -74,8 +74,8 @@ export default function SociosPage() {
         </div>
 
         {/* Chart */}
-        <div className="rounded-lg border border-border bg-background shadow-sm p-6">
-          <h2 className="text-lg font-bold mb-4">Distribuição</h2>
+        <div className="rounded-lg border border-border bg-background p-6">
+          <h2 className="text-lg font-medium mb-4">Distribuição</h2>
           <div className="h-52">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>

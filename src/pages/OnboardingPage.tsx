@@ -194,7 +194,7 @@ export default function OnboardingPage() {
           {step === 4 && (
             <div className="space-y-6 text-center">
               <div>
-                <h1 className="text-2xl font-bold">Tudo pronto!</h1>
+                <h1 className="text-2xl font-medium">Tudo pronto!</h1>
                 <p className="text-sm text-muted-foreground mt-2">Seu sistema de cotas está configurado.</p>
               </div>
               <div className="rounded-lg border border-border bg-surface p-6 text-left space-y-3">

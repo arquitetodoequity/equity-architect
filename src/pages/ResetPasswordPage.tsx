@@ -119,7 +119,7 @@ export default function ResetPasswordPage() {
         {flowState === "ready" && (
           <>
             <div>
-              <h2 className="text-2xl font-bold">Redefinir senha</h2>
+              <h2 className="text-2xl font-medium">Redefinir senha</h2>
               <p className="text-sm text-muted-foreground mt-1">Digite sua nova senha abaixo.</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">

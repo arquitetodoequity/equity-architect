@@ -645,7 +645,7 @@ export default function SetupPage() {
 
               {/* New partners */}
               <div className="space-y-3">
-                <h3 className="text-sm font-bold">Novos sócios</h3>
+                <h3 className="text-sm font-medium">Novos sócios</h3>
                 <RadioGroup value={newPartnerMode} onChange={(v) => setNewPartnerMode(v as NewPartnerMode)} options={[
                   { value: "pool", label: "Transferência do pool de reserva (sem diluição)" },
                   { value: "new_emission", label: "Emissão de novos tokens (dilui todos proporcionalmente)" },

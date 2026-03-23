@@ -132,7 +132,7 @@ export default function VotacoesPage() {
             {completedProposals.length} propostas
           </span>
         </div>
-        <div className="rounded-lg border border-border bg-background shadow-sm overflow-x-auto">
+        <div className="rounded-lg border border-border bg-background overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-surface text-left">

@@ -7,16 +7,16 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 6.7%;
+    --foreground: 0 0% 0%;
 
     --card: 210 40% 98.8%;
-    --card-foreground: 0 0% 6.7%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 6.7%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 217 91% 53%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 42 45% 56%;
+    --primary-foreground: 0 0% 0%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 215 25% 27%;
@@ -35,7 +35,7 @@
 
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 217 91% 53%;
+    --ring: 42 45% 56%;
 
     --radius: 0.5rem;
 
@@ -48,6 +48,10 @@
     --gold-hover-bg: 36 100% 97%;
 
     --surface: 210 40% 98.8%;
+
+    --action: 217 91% 53%;
+    --grafite: 0 0% 10%;
+    --carvao: 0 0% 17%;
   }
 }
 
@@ -59,10 +63,11 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
+    @apply font-medium tracking-tight;
   }
 
   p {
@@ -86,6 +91,10 @@
   }
 
   .input-field {
-    @apply w-full h-10 px-4 rounded-lg border border-border bg-background text-sm transition-fast focus:outline-none focus:ring-2 focus:ring-ring;
+    @apply w-full h-10 px-3 rounded-lg border border-border bg-background text-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-ring;
+  }
+
+  .section-label {
+    @apply text-[11px] uppercase tracking-[0.08em] text-muted-foreground;
   }
 }

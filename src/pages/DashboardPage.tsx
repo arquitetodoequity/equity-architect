@@ -196,8 +196,8 @@ export default function DashboardPage() {
             { label: "Pool disponível", value: "10%", sub: "Reserva para novos sócios" },
             { label: "Última decisão", value: "28 fev 2026", sub: "Entrada de Marina Torres" },
           ].map((m) => (
-            <div key={m.label} className="rounded-lg border border-border bg-background shadow-sm p-6 transition-fast hover:shadow-md">
-              <p className="text-xs text-muted-foreground mb-1">{m.label}</p>
+            <div key={m.label} className="rounded-lg border border-border bg-background p-6 transition-fast hover:bg-surface">
+              <p className="section-label mb-1">{m.label}</p>
               <p className="text-2xl font-bold text-gold">{m.value}</p>
               <p className="text-xs text-muted-foreground mt-1">{m.sub}</p>
             </div>

@@ -176,7 +176,7 @@ export default function SimuladorPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-foreground/40" onClick={() => setConfirmModal(false)} />
           <div className="relative bg-background rounded-xl shadow-lg border border-border w-full max-w-md p-6 space-y-4">
-            <h2 className="text-lg font-bold">Confirmar registro</h2>
+            <h2 className="text-lg font-medium">Confirmar registro</h2>
             <p className="text-sm text-muted-foreground">
               Confirmar que o pagamento foi realizado em {new Date().toLocaleDateString("pt-BR")} via banco?
             </p>
