@@ -581,7 +581,7 @@ export default function SetupPage() {
 
               {/* Block B */}
               <div className="space-y-3">
-                <h3 className="text-sm font-bold">Transferência para terceiros (fora do grupo)</h3>
+                <h3 className="text-sm font-medium">Transferência para terceiros (fora do grupo)</h3>
                 <RadioGroup value={transferExternal} onChange={(v) => setTransferExternal(v as TransferExternal)} options={[
                   { value: "unanimous", label: "Permitida com aprovação unânime" },
                   { value: "preference", label: "Não permitida — direito de preferência para sócios atuais" },
