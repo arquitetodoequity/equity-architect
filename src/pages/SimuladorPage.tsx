@@ -100,7 +100,7 @@ export default function SimuladorPage() {
 
       {/* Results */}
       {showResults && numericVal > 0 && (
-        <div className="rounded-lg border border-border bg-background shadow-sm">
+        <div className="rounded-lg border border-border bg-background">
           <div className="p-6 pb-4">
             <h2 className="text-lg font-bold">Resultado da distribuição — {periodo}</h2>
             <p className="text-sm text-muted-foreground mt-1">
