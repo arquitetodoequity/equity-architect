@@ -85,7 +85,7 @@ export default function DashboardPage() {
         {/* Left column */}
         <div className="space-y-6">
           {/* Partners table */}
-          <div className="rounded-lg border border-border bg-background shadow-sm">
+          <div className="rounded-lg border border-border bg-background">
             <div className="p-6 pb-4 flex items-center gap-3">
               <h2 className="text-lg font-bold">Sócios ativos</h2>
               <span className="h-5 px-2 rounded-full bg-success/10 text-success text-xs font-medium flex items-center">
