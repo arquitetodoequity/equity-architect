@@ -105,7 +105,7 @@ export default function OnboardingPage() {
           {step === 2 && (
             <div className="space-y-6 text-center">
               <div>
-                <h1 className="text-2xl font-bold">Quem são os sócios?</h1>
+                <h1 className="text-2xl font-medium">Quem são os sócios?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Adicione os sócios e suas participações.</p>
               </div>
               <div className="space-y-3 text-left">
