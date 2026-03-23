@@ -479,7 +479,7 @@ export default function SetupPage() {
           {step === 4 && (
             <div className="space-y-6">
               <div className="text-center">
-                <h1 className="text-2xl font-bold">Haverá vesting?</h1>
+                <h1 className="text-2xl font-medium">Haverá vesting?</h1>
                 <p className="text-sm text-muted-foreground mt-2">Vesting define quando cada sócio realmente "ganha" sua participação ao longo do tempo.</p>
               </div>
 
