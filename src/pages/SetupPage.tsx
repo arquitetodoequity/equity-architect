@@ -571,7 +571,7 @@ export default function SetupPage() {
 
               {/* Block A */}
               <div className="space-y-3">
-                <h3 className="text-sm font-bold">Transferência entre sócios existentes</h3>
+                <h3 className="text-sm font-medium">Transferência entre sócios existentes</h3>
                 <RadioGroup value={transferBetween} onChange={(v) => setTransferBetween(v as TransferBetween)} options={[
                   { value: "free", label: "Livre — qualquer sócio pode transferir para outro" },
                   { value: "approval", label: "Requer aprovação do grupo" },
