@@ -14,6 +14,7 @@ import SimuladorPage from "@/pages/SimuladorPage";
 import ConfiguracoesPage from "@/pages/ConfiguracoesPage";
 import OnboardingPage from "@/pages/OnboardingPage";
 import SetupPage from "@/pages/SetupPage";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();

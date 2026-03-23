@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [fullName, setFullName] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   // If already logged in, redirect
   if (user) {
