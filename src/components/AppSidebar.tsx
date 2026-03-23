@@ -1,6 +1,7 @@
 import { PieChart, LayoutDashboard, Users, Vote, Calculator, Settings, Menu, X, LogOut } from "lucide-react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAppContext } from "@/contexts/AppContext";
+import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 
 const navItems = [
@@ -13,12 +14,14 @@ const navItems = [
 
 export default function AppSidebar() {
   const { currentUser } = useAppContext();
+  const { isDemo, signOut } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setMobileOpen(false);
+    await signOut();
     navigate("/");
   };
 
@@ -52,6 +55,11 @@ export default function AppSidebar() {
         })}
       </nav>
 
+        {isDemo && (
+          <div className="mx-4 mb-3 px-3 py-1.5 rounded-md border border-gold/30 bg-gold/10 text-center">
+            <span className="text-[11px] uppercase tracking-wider text-gold font-medium">Modo Demo</span>
+          </div>
+        )}
       {/* Footer */}
       <div className="p-4 border-t border-sidebar-fg/10">
         <div className="flex items-center gap-3">
